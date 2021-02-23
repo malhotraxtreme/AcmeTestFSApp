@@ -1,0 +1,61 @@
+version: "3"
+services:
+  api:
+    container_name: acme-api
+    restart: always
+    build:
+      context: ./Acme
+    volumes:
+      - ./Acme:/usr/src/acmeapi
+    networks:
+      - acmenet
+    depends_on:
+      - mongo
+    ports:
+      - "3000:3000"
+    external_links:
+      - mongo
+  dash:
+    container_name: acme-dash
+    restart: always
+    build: ./AcmeDash
+    volumes:
+      - ./AcmeDash:/usr/src/acmedash
+    networks:
+      - acmenet
+    links:
+      - api
+    ports:
+      - "4100:3000"
+    external_links:
+      - mongo
+  device:
+    container_name: acme-device
+    restart: always
+    build: ./AcmeDeviceApp
+    volumes:
+      - ./AcmeDeviceApp:/usr/src/acmedevice
+    networks:
+      - acmenet
+    links:
+      - api
+    ports:
+      - "4200:3000"
+    external_links:
+      - mongo
+  mongo:
+    image: mongo:4.0-xenial
+    networks:
+      - acmenet
+    volumes:
+      - mongoVolume:/data/db
+    ports:
+      - "27017:27017"
+
+networks:
+  acmenet:
+    driver: bridge
+
+volumes:
+  mongoVolume:
+    driver: local

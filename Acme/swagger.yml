@@ -1,0 +1,189 @@
+swagger: "2.0"
+info:
+  description: "Acme Api Information"
+  version: "1.0.0"
+  title: "Acme Api"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "akm.2515@bmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "www.acme.com"
+basePath: "/api"
+tags:
+- name: "device"
+  description: "Devices CRUD functions"
+- name: "dashview"
+  description: "Reading Devices current state"
+
+schemes:
+- "http"
+paths:
+  /device/{id}:
+    get:
+      tags:
+      - "device"
+      summary: "Gets device data by Id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Device Id"
+        required: true
+        type: "string"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Device"
+        "400":
+          description: "Invalid status value"
+    post:
+      tags:
+      - "device"
+      summary: "Add a new device source"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Device Id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "New Device object"
+        required: true
+        schema:
+          $ref: "#/definitions/Device"
+      responses:
+        "405":
+          description: "Invalid input"
+        "204":
+          description: "Created"
+    put:
+      tags:
+      - "device"
+      summary: "Update an existing device"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/xml"
+      parameters:
+      - name: "id"
+        in: "path"
+        description: "Device Id"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Device object to be updated"
+        required: true
+        schema:
+          $ref: "#/definitions/Device"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Device not found"
+    delete:
+      tags:
+      - "device"
+      summary: "Delete an existing device"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/xml"
+      parameters:
+       - name: "id"
+         in: "path"
+         description: "Device Id"
+         required: true
+         type: "string"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Device not found"
+          
+  /dashview:
+    get:
+      tags:
+      - "dashview"
+      summary: "Gets all devices data for Dashview"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Device"
+        "400":
+          description: "Invalid status value"
+
+
+definitions:
+  Category:
+    type: "object"
+    properties:
+      id:
+        type: "string"
+      name:
+        type: "string"
+        example: "Car"
+      properties: 
+        $ref: "#/definitions/Property"
+        
+  Property:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+        example: "fluid_level"
+      type: 
+        type: "string"
+        example: "boolean"
+      range:
+        type: array
+        items: {}
+        example: [true,false]
+      
+  Device:
+    type: "object"
+    required:
+    - "category"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+      category:
+        $ref: "#/definitions/Category"
+      name:
+        type: "string"
+        example: "Curve 8520"
+      status:
+        type: "string"
+        description: "device status"
+        enum:
+        - "active"
+        - "inactive"
+        - "sleep"
+
+  ApiResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
