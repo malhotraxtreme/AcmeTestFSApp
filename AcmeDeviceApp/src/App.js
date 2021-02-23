@@ -3,7 +3,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      react device 33
+      react device app is here
     </div>
   );
 }

@@ -3,10 +3,10 @@ services:
   api:
     container_name: acme-api
     restart: always
-    build:
-      context: ./Acme
+    build: ./Acme
     volumes:
       - ./Acme:/usr/src/acmeapi
+      - /usr/src/acmeapi/node_modules
     networks:
       - acmenet
     depends_on:
@@ -15,34 +15,37 @@ services:
       - "3000:3000"
     external_links:
       - mongo
-  dash:
-    container_name: acme-dash
-    restart: always
-    build: ./AcmeDash
-    volumes:
-      - ./AcmeDash:/usr/src/acmedash
-    networks:
-      - acmenet
-    links:
-      - api
-    ports:
-      - "4100:3000"
-    external_links:
-      - mongo
-  device:
-    container_name: acme-device
-    restart: always
-    build: ./AcmeDeviceApp
-    volumes:
-      - ./AcmeDeviceApp:/usr/src/acmedevice
-    networks:
-      - acmenet
-    links:
-      - api
-    ports:
-      - "4200:3000"
-    external_links:
-      - mongo
+  # dash:
+  #   container_name: acme-dash
+  #   restart: always
+  #   build: ./AcmeDash
+  #   volumes:
+  #     - ./AcmeDash:/usr/src/acmedash
+  #     - /usr/src/acmedash/node_modules
+  #   networks:
+  #     - acmenet
+  #   links:
+  #     - api
+  #   ports:
+  #     - "4100:3000"
+  #   external_links:
+  #     - mongo
+  # device:
+  #   container_name: acme-device
+  #   restart: always
+  #   build: ./AcmeDeviceApp
+  #   volumes:
+  #     - ./AcmeDeviceApp:/usr/src/acmedevice
+  #     - /usr/src/acmedevice/node_modules
+  #   networks:
+  #     - acmenet
+  #   links:
+  #     - api
+  #   ports:
+  #     - "4200:3000"
+  #   external_links:
+  #     - mongo
+
   mongo:
     image: mongo:4.0-xenial
     networks:

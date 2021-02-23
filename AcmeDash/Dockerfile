@@ -1,5 +1,6 @@
 FROM node:13.12.0-alpine
 
+RUN mkdir -p /usr/src/acmedash
 WORKDIR /usr/src/acmedash
 
 COPY package.json ./
