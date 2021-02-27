@@ -155,6 +155,9 @@ definitions:
         type: array
         items: {}
         example: [true,false]
+      value:
+        type: "string"
+        example: "true"
       
   Device:
     type: "object"

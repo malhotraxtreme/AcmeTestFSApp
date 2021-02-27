@@ -1,34 +1,24 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
+import Table from '../table/table';
 
 const useStyles = makeStyles((theme) => ({
-    marginTop: {
-        marginTop: '20px'
+    tableGrid: {
+        marginTop: '20px',
+        textAlign: 'center',
+        backgroundColor: 'white',
     },
     root: {
         flexGrow: 1,
-    },
-    paper: {
-        padding: theme.spacing(1),
-        textAlign: 'center',
-        color: theme.palette.text.secondary,
-    },
+    }
 }));
 
 function Dashboard() {
     const classes = useStyles();
     return (
-        <Grid container className={classes.marginTop}>
-            <Grid container item xs={4}>
-                as1
-            </Grid>
-            <Grid container item xs={4}>
-                2sdf
-            </Grid>
-            <Grid container item xs={4}>
-                3asdssfgsdgsdfgiedrfngiou
-            </Grid>
+        <Grid container className={classes.tableGrid}>
+            <Table />
         </Grid>
     );
 }

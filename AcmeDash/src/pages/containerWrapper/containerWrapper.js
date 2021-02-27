@@ -1,8 +1,11 @@
 import React from 'react';
-import "./containerWrapper.css";
+import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+
 import Header from '../../components/header/header';
 import Dashboard from '../../components/dashboard/dashboard';
 import Container from '@material-ui/core/Container';
+import Footer from '../../components/footer/footer';
+import Device from '../device/device';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -18,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
     },
+    list: {
+        overflow: 'hidden',
+    },
     drawer: {
         width: drawerWidth,
         flexShrink: 0,
@@ -29,6 +35,7 @@ const useStyles = makeStyles((theme) => ({
     content: {
         flexGrow: 1,
         backgroundColor: theme.palette.background.default,
+        minHeight: '100vh'
     },
 }));
 
@@ -46,7 +53,7 @@ export default function ContainerWrapper() {
                 }}
                 anchor="left"
             >
-                <List>
+                <List className={classes.list}>
                     <ListItem button>
                         <ListItemIcon><HomeIcon /></ListItemIcon>
                     </ListItem>
@@ -55,12 +62,18 @@ export default function ContainerWrapper() {
                     </ListItem>
                 </List>
             </Drawer>
-            <main className={classes.content}>
-                <Header className="resetPadding" />
-                <Container maxWidth="lg" >
-                    <Dashboard />
-                </Container>
-            </main>
+            <Router>
+                <main className={classes.content}>
+                    <Header className="resetPadding" />
+                    <Container maxWidth="lg" >
+                        <Switch>
+                            <Route path='/' exact component={Dashboard} />
+                            <Route path='/device' exact component={Device} />
+                        </Switch>
+                    </Container>
+                    <Footer className="resetPadding" />
+                </main>
+            </Router>
         </div>
 
     );
