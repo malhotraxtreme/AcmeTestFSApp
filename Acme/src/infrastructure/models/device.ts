@@ -10,7 +10,7 @@ export const deviceSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     deviceType: { type: String, required: true },
-    status: { type: String, enum: Status, required: true },
+    status: { type: String, required: true },
     properties: Array,
   },
   { timestamps: true }

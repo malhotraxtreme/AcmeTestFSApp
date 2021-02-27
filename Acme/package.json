@@ -4,7 +4,7 @@
   "description": "Acme Application Rest API",
   "main": "index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
+    "start": "nodemon index.ts",
     "dev": "nodemon index.ts",
     "build": "tsc -p .",
     "test": "npm test"

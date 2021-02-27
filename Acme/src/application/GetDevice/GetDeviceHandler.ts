@@ -6,21 +6,16 @@ import { AcmeDeviceRepositoryInterface } from "../../domain/interfaces/AcmeDevic
 export class GetDeviceHandler {
   constructor(
     @inject(TYPES.Repository)
-    @named("AcmeDeviceRepository")
+    @named("acmeDeviceRepository")
     private acmeDeviceRepo: AcmeDeviceRepositoryInterface
   ) {}
 
-  public async handle(device_id: any): Promise<void> {
+  public async handle(device_id: any): Promise<any> {
     try {
+      console.log("In handler : ", device_id);
       const device = await this.acmeDeviceRepo.getDeviceById(device_id);
+      console.log("Device : ", device);
       return device;
-    } catch (e) {
-      // if (e instanceof InvalidWave || e instanceof InvalidObject) {
-      //     throw new InputException(e.status, e.message);
-      // } else if (e instanceof InfrastructureException) {
-      //     throw new ApplicationException(e.status, e.message);
-      // }
-      // throw e;
-    }
+    } catch (e) {}
   }
 }

@@ -15,4 +15,4 @@ ENV MONGODB_PASSWORD=pass
 
 EXPOSE 3000
 
-CMD ["node", "index"]
+CMD ["/usr/src/acmeapi/node_modules/.bin/nodemon", "index.ts"]

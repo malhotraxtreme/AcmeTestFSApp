@@ -12,21 +12,35 @@ export class AcmeDeviceRepository implements AcmeDeviceRepositoryInterface {
     return res;
   }
   async getDeviceById(device_id: any): Promise<any> {
-    const res = await DeviceModel.find({ _id: device_id });
-    return res;
+    try {
+      const res = await DeviceModel.find({ _id: device_id });
+      return res;
+    } catch (err) {
+      console.log(500, err.message);
+    }
   }
   async createDevice(device: Device): Promise<any> {
-    const newDevice = new DeviceModel(device);
-    const res = await newDevice.save();
-    return res;
+    try {
+      const document = await DeviceModel.create(device);
+      return document;
+    } catch (err) {
+      console.log(500, err.message);
+    }
   }
-  async updateDevice(device: Device): Promise<any> {
-    const newDevice = new DeviceModel(device);
-    const res = await newDevice.save();
-    return res;
+  async updateDevice(device_id: string, device: Device | any): Promise<any> {
+    try {
+      const updatedDevice = await DeviceModel.updateOne({ _id: device_id }, device);
+      return updatedDevice;
+    } catch (err) {
+      console.log(500, err.message);
+    }
   }
   async deleteDevice(device_id: any): Promise<any> {
-    const res = await DeviceModel.deleteOne({ _id: device_id });
-    return res;
+    try {
+      const deletedDevice = await DeviceModel.deleteOne({ _id: device_id });
+      return deletedDevice;
+    } catch (err) {
+      console.log(500, err.message);
+    }
   }
 }
