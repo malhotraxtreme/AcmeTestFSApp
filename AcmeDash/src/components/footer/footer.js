@@ -36,7 +36,7 @@ export default function Footer() {
     return (
         <div className={classes.root}>
             <Toolbar className={classes.toolBar}>
-                <Button className={classes.btn} variant="contained" color="primary">Save</Button>
+                <Button className={classes.btn} variant="contained" color="primary" disabled>Save</Button>
                 <Button className={classes.btn} variant="contained" color="secondary" onClick={handleBack}>Back</Button>
             </Toolbar>
         </div>
