@@ -13,7 +13,6 @@ export class GetAllDevicesHandler {
   public async handle(): Promise<any> {
     try {
       const devices = await this.acmeDeviceRepo.getAllDevices();
-      console.log("Devices : ", devices);
       return devices;
     } catch (e) {}
   }

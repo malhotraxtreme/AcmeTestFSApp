@@ -24,9 +24,6 @@ function App() {
         <DataTable />
         <AddDevice />
 
-
-
-
         <Footer />
       </Container>
     </>

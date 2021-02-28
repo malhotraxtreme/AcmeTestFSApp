@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { inject, named } from "inversify";
-import { controller, httpGet, httpPost, httpPut, httpDelete, interfaces } from "inversify-express-utils";
+import { controller, httpGet, httpPost, httpPatch, httpDelete, interfaces } from "inversify-express-utils";
 import { TYPES } from "../../constants/types";
 
 import { GetDeviceHandler } from "../../application/GetDevice/GetDeviceHandler";
@@ -37,15 +37,15 @@ export class AcmeDeviceController implements interfaces.Controller {
     return res.status(200).json(resp);
   }
 
-  @httpPut("/device")
-  public async put(req: Request, res: Response): Promise<any> {
-    await this.updateDeviceHandler.handle(req.body);
-    return res.status(200);
+  @httpPatch("/device/:deviceId")
+  public async patch(req: Request, res: Response): Promise<any> {
+    const resp = await this.updateDeviceHandler.handle(req.params.deviceId, req.body);
+    return res.status(200).json(resp);
   }
 
   @httpDelete("/device/:deviceId")
   public async delete(req: Request, res: Response): Promise<any> {
-    await this.deleteDeviceHandler.handle(req.params.deviceId);
-    return res.status(200);
+    const resp = await this.deleteDeviceHandler.handle(req.params.deviceId);
+    return res.status(200).json(resp);
   }
 }

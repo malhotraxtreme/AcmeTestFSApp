@@ -29,9 +29,9 @@ const makeServer = async () => {
   const server = new InversifyExpressServer(container);
 
   server.setConfig((serverApp) => {
-    if (process.env.ENVIRONMENT === "local") {
-      serverApp.use(cors());
-    }
+    // if (process.env.ENVIRONMENT === "local") {
+    serverApp.use(cors());
+    // }
     serverApp.use(bodyParser.json({ type: "application/json" }));
   });
   const app = server.build();

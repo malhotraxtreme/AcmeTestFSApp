@@ -12,7 +12,7 @@ services:
     depends_on:
       - mongo
     ports:
-      - "3000:3000"
+      - "8000:3000"
     external_links:
       - mongo
   # dash:

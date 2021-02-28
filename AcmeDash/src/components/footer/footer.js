@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button';
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        marginTop: '50px',
         flexGrow: 1,
         position: 'fixed',
         bottom: 0,

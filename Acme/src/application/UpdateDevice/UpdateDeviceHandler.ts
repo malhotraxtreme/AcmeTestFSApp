@@ -11,9 +11,8 @@ export class UpdateDeviceHandler {
     private acmeDeviceRepo: AcmeDeviceRepositoryInterface
   ) {}
 
-  public async handle(device: Device): Promise<any> {
+  public async handle(device_id: string, device: Device): Promise<any> {
     try {
-      const device_id = (device as any)._id;
       const deviceUpdated = await this.acmeDeviceRepo.updateDevice(device_id, device);
       return deviceUpdated;
     } catch (e) {}

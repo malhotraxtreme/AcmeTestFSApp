@@ -64,14 +64,14 @@ export default function ContainerWrapper() {
             </Drawer>
             <Router>
                 <main className={classes.content}>
-                    <Header className="resetPadding" />
+                    <Header />
                     <Container maxWidth="lg" >
                         <Switch>
                             <Route path='/' exact component={Dashboard} />
                             <Route path='/device' exact component={Device} />
                         </Switch>
                     </Container>
-                    <Footer className="resetPadding" />
+                    <Footer />
                 </main>
             </Router>
         </div>

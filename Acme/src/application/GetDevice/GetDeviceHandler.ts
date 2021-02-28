@@ -12,9 +12,7 @@ export class GetDeviceHandler {
 
   public async handle(device_id: any): Promise<any> {
     try {
-      console.log("In handler : ", device_id);
       const device = await this.acmeDeviceRepo.getDeviceById(device_id);
-      console.log("Device : ", device);
       return device;
     } catch (e) {}
   }

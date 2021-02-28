@@ -11,7 +11,7 @@ export class CreateDeviceHandler {
     private acmeDeviceRepo: AcmeDeviceRepositoryInterface
   ) {}
 
-  public async handle(device: Device): Promise<void> {
+  public async handle(device: Device): Promise<any> {
     try {
       const deviceCreated = await this.acmeDeviceRepo.createDevice(device);
       return deviceCreated;
