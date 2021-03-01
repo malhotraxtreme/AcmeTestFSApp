@@ -41,8 +41,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ContainerWrapper() {
     const classes = useStyles();
-
-
     return (
         <div className={classes.root}>
             <Drawer

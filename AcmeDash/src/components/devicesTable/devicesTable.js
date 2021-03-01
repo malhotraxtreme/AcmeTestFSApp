@@ -2,6 +2,8 @@ import { useHistory } from "react-router-dom";
 import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { setDevices } from '../../store/actions/dashActions';
+import io from 'socket.io-client';
+
 import { getAllDevices } from '../../api/api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,16 +37,23 @@ function DevicesTable(props) {
     const history = useHistory();
     const classes = useStyles();
 
-    useEffect(() => {
-        getAllDevices().then((data) => {
-            props.setDevices(data);
-        });
+    //Sockets
+    const apiUrl = "http://localhost:8000";
+    const socket = io(apiUrl);
+    socket.on('deviceUpdated', async (data) => {
+        console.log("Device Updated", data);
+        await getDeviceData();
+    });
+
+    useEffect(async () => {
+        await getDeviceData();
     }, []);
 
-    // useEffect(() => {
-    //     console.log("state be like ", props.state);
-    // }, [props.state])
-
+    const getDeviceData = async () => {
+        await getAllDevices().then((data) => {
+            props.setDevices(data);
+        });
+    }
 
     const handleOpenInfo = (index) => {
         history.push('/device', { device: props.state[index] });
@@ -82,7 +91,7 @@ const mapStateToProps = state => ({
     state
 });
 const mapDispatchToProps = dispatch => ({
-    setDevices: (payload) => dispatch(setDevices(payload))
+    setDevices: (payload) => dispatch(setDevices(payload)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DevicesTable);

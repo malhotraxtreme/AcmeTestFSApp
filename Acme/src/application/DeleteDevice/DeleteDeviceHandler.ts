@@ -1,6 +1,7 @@
 import { inject, injectable, named } from "inversify";
 import { TYPES } from "../../constants/types";
 import { AcmeDeviceRepositoryInterface } from "../../domain/interfaces/AcmeDeviceRepositoryInterface";
+import { SocketEmitter } from "../../socketio/socket";
 
 @injectable()
 export class DeleteDeviceHandler {
@@ -13,6 +14,7 @@ export class DeleteDeviceHandler {
   public async handle(device_id: string): Promise<any> {
     try {
       const deviceDeleted = await this.acmeDeviceRepo.deleteDevice(device_id);
+      SocketEmitter.socket.emit("deviceUpdated", deviceDeleted);
       return deviceDeleted;
     } catch (e) {}
   }

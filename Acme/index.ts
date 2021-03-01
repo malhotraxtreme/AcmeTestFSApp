@@ -4,6 +4,8 @@ import { Container } from "inversify";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
+import * as socketio from "socket.io";
+import { SocketEmitter } from "./src/socketio/socket";
 
 import { HttpException } from "./src/exceptions/HttpException";
 import { Registry } from "./Registry";
@@ -25,7 +27,7 @@ const makeServer = async () => {
 
   // load all the bindings
   await container.loadAsync((await Registry.getInstance()).getContainer());
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || 8000;
   const server = new InversifyExpressServer(container);
 
   server.setConfig((serverApp) => {
@@ -36,11 +38,24 @@ const makeServer = async () => {
   });
   const app = server.build();
 
-  app.all("*", () => {
-    throw new HttpException(404, "Not found");
+  const httpServer = app.listen(port, () => {
+    console.log(`Server running at http://127.0.0.1:${port}/`);
   });
 
-  app.listen(port, () => {
-    console.log(`Server running at http://127.0.0.1:${port}/`);
+  app.all("/socket.io", () => {
+    const io = require("socket.io")(httpServer, {
+      cors: {
+        origin: "*",
+      },
+    });
+
+    io.on("connection", (socket: socketio.Socket) => {
+      console.log("Socket connected");
+      SocketEmitter.socket = socket;
+    });
+  });
+
+  app.all("*", () => {
+    throw new HttpException(404, "Not found");
   });
 };
