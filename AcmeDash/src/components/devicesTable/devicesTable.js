@@ -41,7 +41,6 @@ function DevicesTable(props) {
     const apiUrl = "http://localhost:8000";
     const socket = io(apiUrl);
     socket.on('deviceUpdated', async (data) => {
-        console.log("Device Updated", data);
         await getDeviceData();
     });
 

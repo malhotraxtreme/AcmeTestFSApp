@@ -50,7 +50,6 @@ const makeServer = async () => {
     });
 
     io.on("connection", (socket: socketio.Socket) => {
-      console.log("Socket connected");
       SocketEmitter.socket = socket;
     });
   });
